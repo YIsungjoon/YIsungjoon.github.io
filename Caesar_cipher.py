@@ -5,4 +5,6 @@ def ceaser_cipher(text, n):
     return result
 
 if __name__ == "__main__":
-    print(ceaser_cipher("hello", 3))
+    text = input("문자입력")
+    num = int(input("문자의 거리입력:"))
+    print(ceaser_cipher(text, num))
