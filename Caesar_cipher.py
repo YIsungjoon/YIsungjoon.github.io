@@ -1,7 +1,11 @@
 def ceaser_cipher(text, n):
     result = ""
     for st in text:
-        result += chr(ord(st)+n)
+        if ord(st)+n > 122:
+            n =  (ord(st)+n)%97
+            result += chr(97+n)
+        else:
+            result += chr(ord(st)+n)
     return result
 
 if __name__ == "__main__":
