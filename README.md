@@ -1,7 +1,4 @@
 # YIsungjoon.github.io
 
-name : YSJ
-
-skills : Python,  SQL, MachineLearning, DeepLearning
-
-흠... 쓸 말이 없다.
+- `/` — 포트폴리오 (index.html, 단일 파일)
+- `/caesar-cipher/` — 2023 시저 암호 연습 페이지
