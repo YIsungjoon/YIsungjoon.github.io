@@ -192,9 +192,9 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
     로컬 LLM에서 클라우드 LLM으로, 절차형 파이프라인에서 LangGraph 네이티브 에이전트로 시스템을 두 번 재설계했습니다.
   </p>
   <div class="stats">
-    <div><b>18</b><span>상시 운영 컨테이너 (GPU 서버 1대, 전부 healthy)</span></div>
-    <div><b>145K</b><span>메인 서비스 코드 라인 (Python·TS)</span></div>
-    <div><b>542</b><span>에이전트 자동 검사 (그래프 68 · 클라이언트 159 · 품질 315)</span></div>
+    <div><b>150</b><span>Contech-GPT 등록 사용자 · 세션 1,261 · 질의응답 3,502건</span></div>
+    <div><b>64→87%</b><span>법령 출처가 붙은 답변 비율 (2026.05 → 09)</span></div>
+    <div><b>34→11%</b><span>근거 없이 나간 답변 비율, 1/3로 감소 (2026.05 → 09)</span></div>
     <div><b>27s→4s</b><span>영수증 OCR 처리시간, 정확도 유지하며 모델 27B→2B</span></div>
   </div>
 </section>
@@ -252,13 +252,13 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
         <div>
           <h4>운영·품질</h4>
           <ul class="dots">
-            <li><b>1,000문항 QA셋</b>(단일·복합 질문) 구축 + 5-Level smoke 자동 테스트(AutoTest)로 릴리스마다 회귀 검증, 실채팅 로그 분석 보고서로 라우팅 오류·미답변 유형 추적</li>
+            <li><b>자동 평가 체계</b> — 실사용 반복 실패·부정 피드백 질문(P1) → 실사용(P2) → LLM 생성(P3) 우선순위로 1,063문항 풀 구축, GPT-as-Judge로 정상/불완전/관련없음/법령인용오류/환각 5유형 분류. 시나리오별 5-Level smoke로 릴리스 회귀 검증</li>
             <li><b>서버 이전(07월)</b> — 사내망 → Tailscale 망으로 전 서비스 재바인딩, <code>post_boot_check.sh</code>(부팅 후 컨테이너·헬스 선언적 점검) 등 호스트 복구 절차 문서화·스크립트화</li>
             <li><b>외부 서비스 연동(09월)</b> — 레거시 체크리스트 서비스의 질의를 full prefetch 경로로 라우팅하는 답변 API 추가, 스트리밍 중 법령 인용 번호·시행일 정합성(citation reconciliation) 핫픽스</li>
             <li>208 커밋, feat/fix/hotfix/savepoint 브랜치 + ci/* 브랜치로 CI 부트 가능성·네트워크 테스트 분리 관리. src2 실험 트랙은 A/B 실행 로그로 비교</li>
           </ul>
         </div>
-        <div class="result">전신(로컬 LLM 챗봇)에서 fork → OpenAI 전환·GraphDB 볼륨 분리·독립 배포까지 <b>요청 당일 오후 착수, 다음날 배포</b>. 이후 <b>prod / dev / 실험(agent-v2)</b> 3트랙을 Docker Compose 프로파일로 분리해 한 서버에서 운영 중. 코드 145K LOC, 카드별 회귀 테스트 + GitHub Actions CI.</div>
+        <div class="result"><b>사용</b> 등록 사용자 150명 · 세션 1,261 · 질의응답 3,502건 (2026-09 기준) &nbsp;·&nbsp; <b>근거 확보</b> 법령 출처가 붙은 답변 63.8% → 87.3%, 근거 없는 답변(출처·법령 인용 없음) 34.2% → 11.3% (2026.05 n=260 → 09 n=71, 운영 DB 집계) &nbsp;·&nbsp; <b>개별 개선 효과</b> 리랭커: 검색 Top-1 점수 0.645→0.898, 본문 청크 적중 25%→88% · GraphDB On-Demand 적재: 답변당 출처 1.93→3.72건(+93%), 응답시간 122→91초 · 체크리스트 API: 394문항 전수 완주, 답변 거부 5/40→0/394 &nbsp;·&nbsp; <b>측정 체계</b> 1,063문항 풀 GPT-as-Judge 자동 평가(베이스라인 환각 2.7%, 2026.04) &nbsp;·&nbsp; <b>트레이드오프</b> 선수집 확대·reasoning 모델 전환으로 평균 응답 40→60초 — 근거 확보를 우선한 선택, 지연 단축은 진행 중 과제</div>
         <ul class="stack"><li>Python</li><li>FastAPI</li><li>LangGraph</li><li>OpenAI gpt-5.5 / gpt-5-mini</li><li>text-embedding-3-large</li><li>bge-reranker-v2-m3</li><li>ChromaDB</li><li>Neo4j ×2</li><li>SQLite</li><li>Next.js 16 · React 19 · Tailwind 4</li><li>Streamlit</li><li>SSE</li><li>Docker Compose</li><li>GitHub Actions</li><li>국가법령정보센터 API</li><li>VWorld</li></ul>
       </div>
     </div>
@@ -307,7 +307,7 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
             <li>A/B/C 3개 변형 구현 후 자체 <code>agent_eval</code>로 비교 → 1개 선정, 릴리스 디렉토리 기반 배포</li>
           </ul>
         </div>
-        <div class="result">자동 검사 <b>542건</b>(그래프 전 경로 68 · 데이터 클라이언트 계약 159 · 품질·API 계약 315). 별도 컨테이너로 서버에 배포 완료, 서비스 전환 대기 중.</div>
+        <div class="result">자동 검사 <b>542건</b>(그래프 전 경로 68 · 데이터 클라이언트 계약 159 · 품질·API 계약 315). A/B/C 변형을 동일 검사로 비교(B: 품질 311/315, 트래픽 135/135, zero-trust 9/9)하고 <b>승격 차단 조건을 KNOWN_RISKS로 명문화</b>(검증 실패 terminal state, adversarial corpus 평가) — 조건 충족 전까지 서비스 전환 보류 중.</div>
         <ul class="stack"><li>LangGraph</li><li>LangChain</li><li>Pydantic</li><li>FastAPI</li><li>uv</li><li>Docker</li></ul>
       </div>
     </div>
@@ -361,7 +361,8 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
         <ul class="dots">
           <li>LangGraph StateGraph <code>classify → rewrite → retrieve → generate</code>, LLM 라우터 8분류(법규·품셈·가이드라인·매뉴얼·사용자문서·법리분석·코드·unknown)</li>
           <li>Golden Card 78장, <code>contech_base</code>(읽기 전용) / <code>contech_user</code>(업로드 CRUD) 컬렉션 분리, SSE 스트리밍, Streamlit + Next.js 이중 프론트</li>
-          <li>legacy / v2 컨테이너 병행 운영으로 무중단 개편 → 2026.05 클라우드 LLM 전환 결정 후 Contech-GPT로 fork</li>
+          <li>2026.03 로컬 LLM 7종 × 5방식 벤치마크(Llama-3.1-8B·Qwen3-8B·Gemma-3-27B·Qwen3-30B-A3B 등) 후 Qwen3.6-35B-A3B 채택 · legacy / v2 컨테이너 병행 운영으로 무중단 개편</li>
+          <li>2026.05 클라우드 LLM 전환 결정 → Contech-GPT로 fork, OpenAI 어댑터·GraphDB 볼륨 분리·독립 배포까지 <b>요청 당일 오후 착수, 다음날 배포</b>. 이후 prod / dev / 실험 3트랙을 Compose 프로파일로 분리</li>
         </ul>
         <ul class="stack"><li>llama.cpp</li><li>Qwen3.6-35B GGUF</li><li>bge-m3</li><li>ChromaDB</li><li>Neo4j</li><li>LangGraph</li><li>FastAPI</li><li>Next.js</li></ul>
       </div>
