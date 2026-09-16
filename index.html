@@ -21,19 +21,18 @@
   --accent-ink:#163ba8;
   --accent-soft:#e6ecfb;
   --num:#0f766e;         /* 수치 — 청록 */
-  --fix:#fff1a8;         /* [수정] 표시 — 완성 후 .fix 규칙 삭제 */
   --sans:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#131720;--surface:#1b2030;--ink:#e8eaf0;--ink-2:#aab1c2;--ink-3:#7d859a;
-    --line:#2a3145;--line-2:#3a4359;--accent:#7aa2ff;--accent-ink:#a9c0ff;--accent-soft:#1f2a48;--num:#4fd1c5;--fix:#5a4d00;
+    --line:#2a3145;--line-2:#3a4359;--accent:#7aa2ff;--accent-ink:#a9c0ff;--accent-soft:#1f2a48;--num:#4fd1c5;
   }
 }
 :root[data-theme="dark"]{
   --bg:#131720;--surface:#1b2030;--ink:#e8eaf0;--ink-2:#aab1c2;--ink-3:#7d859a;
-  --line:#2a3145;--line-2:#3a4359;--accent:#7aa2ff;--accent-ink:#a9c0ff;--accent-soft:#1f2a48;--num:#4fd1c5;--fix:#5a4d00;
+  --line:#2a3145;--line-2:#3a4359;--accent:#7aa2ff;--accent-ink:#a9c0ff;--accent-soft:#1f2a48;--num:#4fd1c5;
 }
 
 /* ── 기본 ─────────────────────────────────────────── */
@@ -47,7 +46,6 @@ h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance;font-weight:600}
 p{margin:0}
 ul{margin:0;padding:0;list-style:none}
 code,.mono{font-family:var(--mono);font-size:.92em}
-.fix{background:var(--fix);border-radius:2px;padding:0 .2em}
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
 
 /* ── 레이아웃: 좌 고정 / 우 본문 ────────────────────── */
@@ -135,7 +133,6 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
   section{break-inside:avoid-page}
   .tl,.tl-note{display:none}
   a::after{content:""}
-  .fix{background:none}
 }
 @media (prefers-reduced-motion:no-preference){a{transition:color .15s}}
 </style>
@@ -176,9 +173,9 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
   <div>
     <div class="eyebrow">Education</div>
     <ul class="edu">
-      <li>법학 학사<small><span class="fix">학교명 · 졸업연도</span></small></li>
+      <li>법학 학사<small>극동대학교 · 2012</small></li>
       <li>이어드림 AI 과정 (1년) 이수 · 2023<small>모의경진대회 NMT 5위/64 · 시계열 9위/60 · 이미지 분류 9위/64</small></li>
-      <li>에티버스러닝 AI 과정 (5.5개월) 이수<small><span class="fix">과정명 · 연도</span></small></li>
+      <li>에티버스러닝 AI 과정 (5.5개월) 이수 · 2022</li>
       <li>Kaggle Competitions <b>Expert</b> — 랭킹 2,796 / 217,574 (최고 1,982위)<small>🥈 Stanford RNA 3D Folding Part 2 72/1,867 (상위 3.8%) · 🥉 Stanford RNA 3D Folding 145/1,516 · 🥉 ICR Age-Related Conditions 349/6,430</small></li>
     </ul>
   </div>
