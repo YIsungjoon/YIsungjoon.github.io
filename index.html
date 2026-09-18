@@ -197,7 +197,7 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
     <strong>건설 인허가·건설기준 도메인 RAG 챗봇</strong>을 설계부터 구현·배포·운영까지 <strong>혼자 맡아</strong> 왔습니다.
     법령 API·그래프DB·규제 카드를 결합해 <strong>“검증 가능한 답변”</strong>을 만드는 데 집중했고,
     로컬 LLM에서 클라우드 LLM으로, 절차형 파이프라인에서 LangGraph 네이티브 에이전트로 시스템을 두 번 재설계했고,
-    최근에는 리팩토링 규약(하네스)을 설계해 AI 에이전트가 레거시 Revit 애드인을 <strong>3일 만에 계층화·테스트화</strong>하도록 운용했습니다.
+    최근에는 리팩토링 규약(하네스)을 설계해 AI 에이전트가 75K LOC 레거시 Revit 애드인을 <strong>3일 만에 계층화·테스트화</strong>하도록 운용했습니다.
   </p>
   <div class="stats">
     <div><b>150</b><span>Contech-GPT 등록 사용자 · 세션 1,261 · 질의응답 3,502건</span></div>
@@ -281,8 +281,8 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
       <span>사내 프로젝트 · 비공개</span>
     </div>
     <div>
-      <h3>Revit 애드인 리팩토링 <small>하네스 규약을 설계하고 AI 에이전트로 레거시 C# 코드 계층화</small></h3>
-      <p class="one">직접 코드를 고친 게 아니라, <b>리팩토링 규약(하네스 md)을 설계하고 Claude Code가 그 규약 안에서만 움직이도록 운용</b>한 실험. 수만 줄짜리 단일 파일과 수천 줄 메서드로 이루어진 사내 Revit 물량 산출 애드인이 3일 만에 계층화되고, 자동 테스트가 없던 코드베이스에 단위·골든 테스트와 PR 게이트가 생겼습니다. 사람이 한 일은 규칙·게이트·승인이고, 변환은 에이전트가 만든 도구가 수행했습니다.</p>
+      <h3>Revit 애드인 리팩토링 <small>하네스 규약을 설계하고 AI 에이전트로 레거시 C# 코드(75K LOC) 계층화</small></h3>
+      <p class="one">직접 코드를 고친 게 아니라, <b>리팩토링 규약(하네스 md)을 설계하고 Claude Code가 그 규약 안에서만 움직이도록 운용</b>한 실험. 22,619줄 단일 파일과 7,809줄 메서드가 있던 사내 Revit 물량 산출 애드인이 3일 만에 계층화되고, 자동 테스트 0건이던 코드베이스에 단위 테스트 533건·골든 테스트·PR 게이트가 생겼습니다. 사람이 한 일은 규칙·게이트·승인이고, 변환은 에이전트가 만든 도구가 수행했습니다.</p>
       <div class="body">
         <div>
           <h4>하네스에 넣은 규칙 (사람의 결정)</h4>
@@ -293,8 +293,8 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
             <li><b>골든 우선</b> — 단계마다 Revit 실모델 골든(UI Automation으로 실제 산출물 before/after 비교) 동일 확인 후 진행. ADR·작업 기록으로 결정 근거 보존</li>
           </ul>
         </div>
-        <div class="result">파일 크기 상한 위반 0 · 순수 규칙 계층에 단위 테스트 수백 건 신설 · Revit 없이 빌드 가능(두 버전 동시 지원) · 에이전트가 생성한 Roslyn 변환·검사 도구 다수 · 3일 &nbsp;·&nbsp; <b>배운 것</b> 규약이 구체적일수록(크기 상한·검증 방법·승인 지점) 에이전트 결과가 검증 가능해진다 · 구체 수치는 사내 자료라 비공개</div>
-        <ul class="stack"><li>AI Harness 설계</li><li>Claude Code</li><li>C# · .NET</li><li>Roslyn</li><li>Revit API</li><li>xunit</li><li>골든 테스트</li><li>PowerShell · Python</li></ul>
+        <div class="result"><b>1,000줄 초과 파일</b> 6 → 0 (최대 22,619 → 888줄) · <b>최장 메서드</b> 7,809 → &lt;500줄 · <b>xunit</b> 0 → 533건(약 1초) · <b>순수 규칙 계층</b> 300 멤버 / 14 도메인 (Revit 의존 0) · 기능 코드 −14.7% · Revit 없이 빌드 가능(2026·2027 동시 지원) · 에이전트가 생성한 Roslyn 변환·검사 도구 8종 · 커밋 56, 3일 &nbsp;·&nbsp; <b>배운 것</b> 규약이 구체적일수록(크기 상한·검증 방법·승인 지점) 에이전트 결과가 검증 가능해진다</div>
+        <ul class="stack"><li>AI Harness 설계</li><li>Claude Code</li><li>C# · .NET 8/10</li><li>Roslyn</li><li>Revit API 2026/2027</li><li>xunit</li><li>골든 테스트</li><li>PowerShell · Python</li></ul>
       </div>
     </div>
   </article>
