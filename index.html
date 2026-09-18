@@ -170,8 +170,8 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
       <div><dt>LLM / 에이전트</dt><dd>LangGraph · LangChain · RAG 파이프라인 설계 · 환각 방어 · Structured Output · Tool Calling · 프롬프트 버전 관리</dd></div>
       <div><dt>모델 서빙</dt><dd>vLLM · llama.cpp · GGUF 양자화(FP4~FP16) · OpenAI API · 임베딩/리랭커(bge-m3, bge-reranker)</dd></div>
       <div><dt>데이터</dt><dd>ChromaDB · Neo4j(Cypher) · PostgreSQL · SQLite · 공공 Open API 연동</dd></div>
-      <div><dt>백엔드 / 프론트</dt><dd>Python · FastAPI · SSE 스트리밍 · Svelte 5 · Next.js 16 · React 19 · Tailwind 4 · Streamlit</dd></div>
-      <div><dt>인프라 / 도구</dt><dd>Docker Compose(prod/dev 프로파일 분리) · GPU 서버 운영 · GitHub Actions · uv · pytest · Claude Code 기반 AI 협업 개발(CLAUDE.md 규약 운영)</dd></div>
+      <div><dt>백엔드 / 프론트</dt><dd>Python · FastAPI · SSE 스트리밍 · Svelte 5 · Next.js 16 · React 19 · Tailwind 4 · Streamlit </dd></div>
+      <div><dt>인프라 / 도구</dt><dd>Docker Compose(prod/dev 프로파일 분리) · GPU 서버 운영 · GitHub Actions · uv · pytest · 골든 테스트 · <b>AI 하네스 설계·에이전트 운용</b>(Claude Code, CLAUDE.md 규약)</dd></div>
       <div><dt>도메인</dt><dd>건축법·건설기준(KDS/KCS)·인허가 규제 · 건설 공정관리(공정표·캘린더·자원) · 법령 데이터 구조화 · 영수증/경비 OCR</dd></div>
     </dl>
   </div>
@@ -196,7 +196,8 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
     법학을 전공하고 AI 엔지니어로 전환해, 2026년 2월부터 라온아크테크건축사사무소에서
     <strong>건설 인허가·건설기준 도메인 RAG 챗봇</strong>을 설계부터 구현·배포·운영까지 <strong>혼자 맡아</strong> 왔습니다.
     법령 API·그래프DB·규제 카드를 결합해 <strong>“검증 가능한 답변”</strong>을 만드는 데 집중했고,
-    로컬 LLM에서 클라우드 LLM으로, 절차형 파이프라인에서 LangGraph 네이티브 에이전트로 시스템을 두 번 재설계했습니다.
+    로컬 LLM에서 클라우드 LLM으로, 절차형 파이프라인에서 LangGraph 네이티브 에이전트로 시스템을 두 번 재설계했고,
+    최근에는 리팩토링 규약(하네스)을 설계해 AI 에이전트가 레거시 Revit 애드인을 <strong>3일 만에 계층화·테스트화</strong>하도록 운용했습니다.
   </p>
   <div class="stats">
     <div><b>150</b><span>Contech-GPT 등록 사용자 · 세션 1,261 · 질의응답 3,502건</span></div>
@@ -218,12 +219,13 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
     <div class="bar" style="grid-column:6/7">공정 도우미 에이전트 PoC</div>
     <div class="bar" style="grid-column:6/8">LAON_AI (LangGraph)</div>
     <div class="bar" style="grid-column:6/8">OCR 스택 서버 이전 · v2</div>
+    <div class="bar" style="grid-column:8/9">Revit 애드인 (AI 하네스)</div>
   </div>
   <p class="tl-note">실선: 단독 개발·운영 · 점선: 팀 프로젝트 기여</p>
 </section>
 
 <section>
-  <h2>프로젝트 <small>단독 개발 6 · 팀 기여 1</small></h2>
+  <h2>프로젝트 <small>단독 개발 7 · 팀 기여 1</small></h2>
 
   <!-- 1. Contech-GPT -->
   <article class="proj">
@@ -267,6 +269,32 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
         </details>
         <div class="result"><b>사용</b> 등록 사용자 150명 · 세션 1,261 · 질의응답 3,502건 (2026-09 기준) &nbsp;·&nbsp; <b>근거 확보</b> 법령 출처가 붙은 답변 63.8% → 87.3%, 근거 없는 답변(출처·법령 인용 없음) 34.2% → 11.3% (2026.05 n=260 → 09 n=71, 운영 DB 집계) &nbsp;·&nbsp; <b>개별 개선 효과</b> 리랭커: 검색 Top-1 점수 0.645→0.898, 본문 청크 적중 25%→88% · GraphDB On-Demand 적재: 답변당 출처 1.93→3.72건(+93%), 응답시간 122→91초 · 체크리스트 API: 394문항 전수 완주, 답변 거부 5/40→0/394 &nbsp;·&nbsp; <b>측정 체계</b> 1,063문항 풀 GPT-as-Judge 자동 평가(베이스라인 환각 2.7%, 2026.04) &nbsp;·&nbsp; <b>트레이드오프</b> 선수집 확대·reasoning 모델 전환으로 평균 응답 40→60초 — 근거 확보를 우선한 선택, 지연 단축은 진행 중 과제</div>
         <ul class="stack"><li>Python</li><li>FastAPI</li><li>LangGraph</li><li>OpenAI gpt-5.5 / gpt-5-mini</li><li>text-embedding-3-large</li><li>bge-reranker-v2-m3</li><li>ChromaDB</li><li>Neo4j ×2</li><li>SQLite</li><li>Next.js 16 · React 19 · Tailwind 4</li><li>Streamlit</li><li>SSE</li><li>Docker Compose</li><li>GitHub Actions</li><li>국가법령정보센터 API</li><li>VWorld</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 1b. Revit 애드인 리팩토링 (AI 하네스) -->
+  <article class="proj">
+    <div class="meta">
+      <span class="when">2026.09 (3일)</span>
+      <span class="tag">Solo · AI 하네스 운용</span>
+      <span>사내 프로젝트 · 비공개</span>
+    </div>
+    <div>
+      <h3>Revit 애드인 리팩토링 <small>하네스 규약을 설계하고 AI 에이전트로 레거시 C# 코드 계층화</small></h3>
+      <p class="one">직접 코드를 고친 게 아니라, <b>리팩토링 규약(하네스 md)을 설계하고 Claude Code가 그 규약 안에서만 움직이도록 운용</b>한 실험. 수만 줄짜리 단일 파일과 수천 줄 메서드로 이루어진 사내 Revit 물량 산출 애드인이 3일 만에 계층화되고, 자동 테스트가 없던 코드베이스에 단위·골든 테스트와 PR 게이트가 생겼습니다. 사람이 한 일은 규칙·게이트·승인이고, 변환은 에이전트가 만든 도구가 수행했습니다.</p>
+      <div class="body">
+        <div>
+          <h4>하네스에 넣은 규칙 (사람의 결정)</h4>
+          <ul class="dots">
+            <li><b>동작 불변</b> — 코드 본문을 바꾸는 단계는 "도구가 변환하고 도구가 검증"할 때만 허용. 각 변환 도구는 자체 검증(토큰 스트림 불변 assert, 재파싱 일치, 데이터 흐름 분석)을 가져야 함</li>
+            <li><b>구조 제약</b> — 순수 규칙(Revit 의존 0)–어댑터–기능–Host 계층, 파일 크기 상한, Host에 로직 금지, 파일당 타입 하나. 위반은 정적 검사 게이트가 PR을 막음</li>
+            <li><b>단계 승인</b> — 3단계 제안서를 사람이 승인해야 다음 단계. 동작 변경은 승인된 버그 수정·회귀 수정·의도된 편차로 전수 보고</li>
+            <li><b>골든 우선</b> — 단계마다 Revit 실모델 골든(UI Automation으로 실제 산출물 before/after 비교) 동일 확인 후 진행. ADR·작업 기록으로 결정 근거 보존</li>
+          </ul>
+        </div>
+        <div class="result">파일 크기 상한 위반 0 · 순수 규칙 계층에 단위 테스트 수백 건 신설 · Revit 없이 빌드 가능(두 버전 동시 지원) · 에이전트가 생성한 Roslyn 변환·검사 도구 다수 · 3일 &nbsp;·&nbsp; <b>배운 것</b> 규약이 구체적일수록(크기 상한·검증 방법·승인 지점) 에이전트 결과가 검증 가능해진다 · 구체 수치는 사내 자료라 비공개</div>
+        <ul class="stack"><li>AI Harness 설계</li><li>Claude Code</li><li>C# · .NET</li><li>Roslyn</li><li>Revit API</li><li>xunit</li><li>골든 테스트</li><li>PowerShell · Python</li></ul>
       </div>
     </div>
   </article>
