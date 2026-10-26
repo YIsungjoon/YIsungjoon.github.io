@@ -252,6 +252,7 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
             <li><b>LLM 호출 전에 근거를 먼저 모은다</b> — 법령API·GraphDB·KDS·RAG·웹·해석례를 병렬 선수집(Stage1)하고 교차 발견된 참조를 2차 수집(Stage2)한 뒤 단일 LLM 스트리밍. 도구를 LLM이 고르게 두면 비결정적이라, 수집은 코드가 결정하고 LLM은 합성만 맡김</li>
             <li><b>자주 나오는 규제 판단은 카드로 고정한다</b> — Golden Card 81장을 질의 슬롯(지역·용도·규모)에 매칭해 답변 최상단에 주입. 카드마다 pytest 회귀 + 품질셋 재채점으로 개정·폐지를 추적</li>
             <li><b>생성 후에 한 번 더 검증한다</b> — 후처리 체인: 법령 원문 링크 주입 → GraphDB 대조로 미확인 법령명 표시(LawNameGuard) → 리스크 프로필 대비 누락 토픽 감사 → grounded 후속 선택지</li>
+            <li><b>모델을 바꾸기 전에 바꿀 근거를 만든다</b> — 신규 모델(GPT-6급) 전환 검토 시 운영 컨테이너의 실제 이미지·마운트·설정을 복제한 격리 환경에서 <b>모델명만 단일 변수</b>로 A/B. 채점 기준(정확성 40·근거와 조건 30·업무 충족 20·전달 품질 10)을 실행 전에 고정하고, 체크리스트 40문항으로 비교 → <b>비용은 낮았지만 법령 근거 탐색·조건 한정에서 기준선 미달</b>로 전환 보류 결정</li>
             <li><b>모든 질문에 풀 파이프라인을 태우지 않는다</b> — 첨부 분석·범위 밖·교정·코드·최신정보·법령 도구·기본 Cascade 7단계 라우팅, fast-path는 검색·LLM 생략</li>
           </ul>
         </div>
@@ -264,6 +265,8 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
             <li>자동 평가 — 실사용 반복 실패·부정 피드백(P1) → 실사용(P2) → LLM 생성(P3) 순 1,063문항 풀, GPT-as-Judge 5유형(정상/불완전/관련없음/법령인용오류/환각) 분류, 시나리오별 5-Level smoke 회귀</li>
             <li>서버 이전(07월) — 사내망 → Tailscale 망 재바인딩, 부팅 후 선언적 헬스 점검 스크립트·복구 절차 문서화</li>
             <li>외부 연동(09월) — 레거시 체크리스트 서비스 답변 API, 스트리밍 중 법령 인용 번호·시행일 정합성 핫픽스</li>
+            <li>모델 평가 실험(2026.10) — 예산 상한·실행 시간 사전 승인, 운영 DB·볼륨 미사용, 기준선도 과거 답변 재사용 없이 재생성. 자체 채점의 한계를 명시하고(구성 인지 상태이므로 블라인드 아님) 법규·안전 쟁점은 <code>human_review_required</code>로 분리. HTTP 200만으로 성공 판정 금지</li>
+            <li>개발 Neo4j를 격리 워크스페이스로 이전하고 read-only soak로 안정성 검증 후 감사 기록</li>
             <li>208 커밋 · feat/fix/hotfix/savepoint + ci/* 브랜치 · prod/dev/실험 3트랙 Compose 프로파일 · 60+ 설계·세션 문서</li>
           </ul>
         </details>
@@ -466,6 +469,36 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
   </article>
   <article class="proj">
     <div class="meta">
+      <span class="when">2026.10</span>
+      <span>sungjuncode</span>
+    </div>
+    <div>
+      <h3>sungjuncode <small>로컬 LLM CLI 코딩 어시스턴트</small></h3>
+      <p class="one">Ollama(Qwen3.5) 로컬 모델 + LangGraph 에이전트 루프로 동작하는 CLI 코딩 도구. Ollama/vLLM 백엔드 전환, 도구 모듈, REPL·렌더러 분리.</p>
+    </div>
+  </article>
+  <article class="proj">
+    <div class="meta">
+      <span class="when">2026.10</span>
+      <span>web-scrapper</span>
+    </div>
+    <div>
+      <h3>규칙 기반 웹 수집기 <small>LLM을 쓰지 않기로 한 선택</small></h3>
+      <p class="one">사용자가 반복 항목·필드를 직접 지정하면 규칙을 검증해 목록·상세를 수집. <b>모델 API 키 없이</b> 동작하도록 설계해 비용·비결정성을 제거하고, 대신 체크포인트·중단 후 재개, 누락·중복 검증(CSV 바이트·셀 해시 재대조)에 투자.</p>
+    </div>
+  </article>
+  <article class="proj">
+    <div class="meta">
+      <span class="when">2026.10</span>
+      <span>정적 분석</span>
+    </div>
+    <div>
+      <h3>상용 데스크톱 앱 정적 분석 <small>설치·실행 없이 구조 복원</small></h3>
+      <p class="one">패키지 바이트·Mach-O·코드서명·디스어셈블과 내장 QML 리소스 66개 복원으로 앱 구조를 파악한 리버싱 보고서. <b>바이트로 직접 확인한 사실과 거기서 도출한 추론을 문장마다 구분 표기</b>.</p>
+    </div>
+  </article>
+  <article class="proj">
+    <div class="meta">
       <span class="when">2023 — 2025</span>
       <a href="https://github.com/YIsungjoon/MuseumChatbot" target="_blank" rel="noopener">MuseumChatbot</a>
       <a href="https://github.com/YIsungjoon/BigContest2025" target="_blank" rel="noopener">BigContest2025</a>
@@ -489,18 +522,18 @@ footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);font-si
   <div class="ops">
     <table>
       <tr><td>서버</td><td>Ubuntu 24.04 LTS · 32 core · 128GB RAM · RTX 4090 24GB</td></tr>
-      <tr><td>컨테이너</td><td>18개 상시 기동(본인 관리분), 전부 healthy — 1인 운영</td></tr>
-      <tr><td>스택 구성</td><td>contech-gpt prod 6 · dev 4 · ocr-stack 3 · laonai-agent 1 · lawgraphdb 2 · agent-chatbot 1</td></tr>
+      <tr><td>컨테이너</td><td>22개 상시 기동(본인 관리분), 전부 healthy — 1인 운영</td></tr>
+      <tr><td>스택 구성</td><td>contech-gpt prod 6 · dev 4 · ocr-stack 3 · laonai-agent 1(+격리 dev DB 2) · lawgraphdb 2 · agent-chatbot 1 · 실험용 DB</td></tr>
       <tr><td>DB</td><td>Neo4j 5 ×6 (법령 1.1GB, KDS 1.4GB) · SQLite (대화 기록)</td></tr>
       <tr><td>GPU 분배</td><td>vLLM(OCR) 0.5 · 나머지 클라우드 LLM으로 오프로드 → 1장으로 전 서비스 운영</td></tr>
       <tr><td>배포</td><td>Docker Compose 프로파일(prod / dev / 실험) · 릴리스 디렉토리 배포 · GitHub Actions CI</td></tr>
     </table>
-    <pre class="diag">RTX 4090 서버 (18 containers, 본인 관리분)
+    <pre class="diag">RTX 4090 서버 (22 containers, 본인 관리분)
 ├─ contech-gpt        prod  :8010 api · :8511 ui · :8521 admin
 │                           :3013 nextjs · agent-v2 :3010
 │                     dev   :8012 api · :3012 nextjs
 │                     neo4j gpt-law :17687 · gpt-kds :17689 (+dev ×2)
-├─ laonai-agent       :8020 (LangGraph)
+├─ laonai-agent       :8020 (LangGraph) · 격리 dev neo4j ×2
 ├─ ocr-stack          ocr-api · laon-vllm (Qwen3.5-2B) · laon-cropper
 ├─ agent-chatbot      :3030 / :8030
 └─ lawgraphdb         law-neo4j :7687 · kds-neo4j :7689</pre>
